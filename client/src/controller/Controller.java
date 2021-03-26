@@ -38,7 +38,7 @@ public class Controller {
             String email = sc.nextLine();
             System.out.println("Ingrese comentarios generales:");
             String comments = sc.nextLine();
-            ManageCasesFiles f = new ManageCasesFiles(specie, size, localidad, addres, name, cel, email, comments);
+            ManageCasesFiles f = new ManageCasesFiles(ca, specie, size, localidad, addres, name, cel, email, comments);
             System.out.println("Su caso ha sido registrado con éxito.");
           } else {
             System.out.println("Entrada no válida: " + ca);
