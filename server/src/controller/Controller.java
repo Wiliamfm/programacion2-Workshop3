@@ -8,6 +8,8 @@ public class Controller {
 
   public Controller() {
     server = new Server();
+    Thread serverT = new Thread(server);
+    serverT.run();
   }
 
 }
