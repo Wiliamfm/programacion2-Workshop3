@@ -13,7 +13,7 @@ public class Client {
 
   public Client(String message) {
     try {
-      s = new Socket("192.168.0.1", 1000);
+      s = new Socket("192.168.0.105", 1000);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       dataOut.writeUTF(message);
       dataOut.close();

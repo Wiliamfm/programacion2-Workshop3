@@ -1,7 +1,6 @@
 package controller;
 
 import model.Client;
-import model.ManageCasesFiles;
 
 import java.util.Scanner;
 
@@ -20,8 +19,35 @@ public class Controller {
         case "1":
           System.out.println(
               "\nEscoga un caso: \n1.Pérdida. \n2.Robo. \n3.Abandono. \n4.Animal Peligroso \n5.Manejo indebido en vía pública.");
-          String ca = sc.nextLine();
-          if (ca.equals("1") || ca.equals("2") || ca.equals("3") || ca.equals("4") || ca.equals("5")) {
+          String ca = "";
+          boolean bca = false;
+          switch (sc.nextLine()) {
+          case "1":
+            ca = "Pérdida";
+            bca = true;
+            break;
+          case "2":
+            ca = "Robo";
+            bca = true;
+            break;
+          case "3":
+            ca = "Abandono";
+            bca = true;
+            break;
+          case "4":
+            ca = "Animal Peligroso";
+            bca = true;
+            break;
+          case "5":
+            ca = "Manejo Indebido";
+            bca = true;
+            break;
+          default:
+            System.out.println("Por favor escoga una de los casos anteriores.");
+            bca = false;
+            break;
+          }
+          if (bca) {
             System.out.println("Ingrese la especie de la mascota:");
             String specie = sc.nextLine();
             System.out.println("Ingrese el tamaño de la mascota:");
@@ -38,10 +64,21 @@ public class Controller {
             String email = sc.nextLine();
             System.out.println("Ingrese comentarios generales:");
             String comments = sc.nextLine();
-            ManageCasesFiles f = new ManageCasesFiles(ca, specie, size, localidad, addres, name, cel, email, comments);
-            System.out.println("Su caso ha sido registrado con éxito.");
+            if (specie.equalsIgnoreCase("canino") || specie.equalsIgnoreCase("felino")) {
+              if (size.equalsIgnoreCase("miniatura") || size.equalsIgnoreCase("pequeño")
+                  || size.equalsIgnoreCase("mediano") || size.equalsIgnoreCase("grande")
+                  || size.equalsIgnoreCase("muy grande")) {
+                String separetor = ",";
+                String message = String.valueOf(java.time.LocalDate.now()) + separetor
+                    + String.valueOf(java.time.LocalTime.now()) + separetor + ca + separetor + specie + separetor + size
+                    + separetor + localidad + separetor + addres + separetor + name + separetor + cel + separetor
+                    + email + separetor + comments;
+                c = new Client(message);
+                System.out.println("Su caso ha sido registrado con éxito.");
+              }
+            }
           } else {
-            System.out.println("Entrada no válida: " + ca);
+            System.out.println("Entrada no válida");
           }
           break;
         case "2":

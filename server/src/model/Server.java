@@ -8,6 +8,7 @@ import java.net.Socket;
 public class Server implements Runnable {
 
   public ServerSocket servidor;
+  private ManageCasesFile mf;
 
   public Server() {
   }
@@ -22,6 +23,7 @@ public class Server implements Runnable {
         DataInputStream inputData = new DataInputStream(s.getInputStream());
         String m = inputData.readUTF();
         System.out.println("Entrada al servidor: " + m);
+        mf = new ManageCasesFile(m);
         s.close();
       }
     } catch (IOException e) {
