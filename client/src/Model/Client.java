@@ -1,22 +1,21 @@
 package model;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Agent extends Thread {
+/**
+ * Client
+ */
+public class Client extends Thread {
 
-  public String message = "";
+  public String message;
 
-  public Agent() {
-
-  }
-
-  public void sendMessage(String message) {
+  public void sendMessage(String message, int host) {
     try {
-      Socket s = new Socket("192.168.0.105", 1002);
+      Socket s = new Socket("192.168.0.105", host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       dataOut.writeUTF(message);
       dataOut.close();
@@ -28,11 +27,11 @@ public class Agent extends Thread {
 
   public void serverChat() {
     try {
-      ServerSocket server = new ServerSocket(1001);
+      ServerSocket server = new ServerSocket(1002);
       Socket sc = server.accept();
       DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
       message = inputChatData.readUTF();
-      System.out.println("\t CLIENTE: " + message);
+      System.out.println("\t Agente: " + message);
       inputChatData.close();
       sc.close();
       server.close();
