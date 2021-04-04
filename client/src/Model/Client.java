@@ -13,15 +13,17 @@ public class Client extends Thread {
 
   public String message;
 
-  public void sendMessage(String message, int host) {
+  public boolean sendMessage(String message, int host) {
     try {
       Socket s = new Socket("192.168.0.105", host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       dataOut.writeUTF(message);
       dataOut.close();
       s.close();
+      return true;
     } catch (IOException e) {
       System.out.println("Error during socket client " + e.getMessage());
+      return false;
     }
   }
 

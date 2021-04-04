@@ -66,16 +66,18 @@ public class Controller {
             System.out.println("Ingrese comentarios generales:");
             String comments = sc.nextLine();
             if (specie.equalsIgnoreCase("canino") || specie.equalsIgnoreCase("felino")) {
-              if (size.equalsIgnoreCase("miniatura") || size.equalsIgnoreCase("pequeño")
-                  || size.equalsIgnoreCase("mediano") || size.equalsIgnoreCase("grande")
-                  || size.equalsIgnoreCase("muy grande")) {
+              if (size.equalsIgnoreCase("miniatura") || size.equalsIgnoreCase("mediano")
+                  || size.equalsIgnoreCase("grande") || size.equalsIgnoreCase("muy grande")) {
                 String separetor = ",";
                 String message = String.valueOf(java.time.LocalDate.now()) + separetor
                     + String.valueOf(java.time.LocalTime.now()) + separetor + ca + separetor + specie.toLowerCase()
                     + separetor + size.toLowerCase() + separetor + localidad + separetor + addres + separetor + name
                     + separetor + cel + separetor + email + separetor + comments;
-                c.sendMessage(message, 1000);
-                System.out.println("Su caso ha sido registrado con éxito.");
+                if (c.sendMessage(message, 1000)) {
+                  System.out.println("Su caso ha sido registrado con éxito.");
+                } else {
+                  System.out.println("Caso no registrado.");
+                }
               }
             }
           } else {
@@ -84,8 +86,8 @@ public class Controller {
           break;
         case "2":
           System.out.println("Conectando con el agente...");
-          c.sendMessage("message-..-", 1001);
-          c.serverChat();
+          if (c.sendMessage("message-..-", 1001)) {
+c.serverChat();
           if (c.message.equals("AceptaR-..-")) {
             System.out.println("Conexión establecida con el agente");
             c.start();
@@ -94,6 +96,9 @@ public class Controller {
             }
           } else {
             System.out.println("El agente rechazó la conexión");
+          }
+          }else{
+            System.out.println("No se pudo establecer conexión con el agente");
           }
           break;
         case "3":
