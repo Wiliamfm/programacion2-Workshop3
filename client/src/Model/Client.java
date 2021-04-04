@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  * Client
  */
-public class Client {
+public class Client extends Thread {
 
   public String message;
 
@@ -31,11 +31,18 @@ public class Client {
       Socket sc = server.accept();
       DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
       message = inputChatData.readUTF();
+      System.out.println("\t Agente: " + message);
       inputChatData.close();
       sc.close();
       server.close();
     } catch (Exception e) {
       System.out.println("Cannot create server Socket: " + e.getMessage());
+    }
+  }
+
+  public void run() {
+    while (true) {
+      serverChat();
     }
   }
 

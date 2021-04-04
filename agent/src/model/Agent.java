@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Agent {
+public class Agent extends Thread {
 
   public String message = "";
 
@@ -32,12 +32,18 @@ public class Agent {
       Socket sc = server.accept();
       DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
       message = inputChatData.readUTF();
-      System.out.println(message);
+      System.out.println("\t CLIENTE: " + message);
       inputChatData.close();
       sc.close();
       server.close();
     } catch (Exception e) {
       System.out.println("Cannot create server Socket: " + e.getMessage());
+    }
+  }
+
+  public void run() {
+    while (true) {
+      serverChat();
     }
   }
 

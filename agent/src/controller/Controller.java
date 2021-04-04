@@ -13,6 +13,7 @@ public class Controller {
   private Agent a;
 
   public Controller() {
+    System.out.println("Bienvenido, espere hasta que un cliente solicite conexión");
     sc = new Scanner(System.in);
     a = new Agent();
     a.serverChat();
@@ -21,8 +22,9 @@ public class Controller {
       switch (sc.nextLine()) {
       case "1":
         a.sendMessage("AceptaR-..-");
-        while (true) {
-          a.serverChat();
+        a.start();
+        while (a.isAlive()) {
+          a.sendMessage(sc.nextLine());
         }
       case "2":
         System.out.println("No se estableció conexión");

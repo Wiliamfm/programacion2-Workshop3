@@ -88,8 +88,9 @@ public class Controller {
           c.serverChat();
           if (c.message.equals("AceptaR-..-")) {
             System.out.println("Conexión establecida con el agente");
-            while (true) {
-              c.serverChat();
+            c.start();
+            while (c.isAlive()) {
+              c.sendMessage(sc.nextLine(), 1001);
             }
           } else {
             System.out.println("El agente rechazó la conexión");
