@@ -3,6 +3,7 @@ package model;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,11 +14,22 @@ public class Client extends Thread {
 
   public String message;
 
-  public boolean sendMessage(String message, int host) {
+  public boolean sendMessage(String message, int host, int t) {
     try {
       Socket s = new Socket("192.168.0.105", host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
-      dataOut.writeUTF(message);
+      switch (t) {
+      case 1:
+        dataOut.writeUTF(message);
+        break;
+      case 2:
+        String sep = ",";
+        String m = InetAddress.getLocalHost().getHostAddress() + sep + message + sep + "c";
+        dataOut.writeUTF(m);
+        break;
+      default:
+        break;
+      }
       dataOut.close();
       s.close();
       return true;
@@ -29,7 +41,7 @@ public class Client extends Thread {
 
   public void serverChat() {
     try {
-      ServerSocket server = new ServerSocket(1002);
+      ServerSocket server = new ServerSocket(1003);
       Socket sc = server.accept();
       DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
       message = inputChatData.readUTF();

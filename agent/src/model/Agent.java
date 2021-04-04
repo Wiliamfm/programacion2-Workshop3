@@ -3,6 +3,7 @@ package model;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,9 +17,11 @@ public class Agent extends Thread {
 
   public void sendMessage(String message) {
     try {
-      Socket s = new Socket("192.168.0.105", 1002);
+      Socket s = new Socket("192.168.0.105", 1001);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
-      dataOut.writeUTF(message);
+      String sep = ",";
+      String m = InetAddress.getLocalHost().getHostAddress() + sep + message + sep + "a";
+      dataOut.writeUTF(m);
       dataOut.close();
       s.close();
     } catch (IOException e) {
@@ -28,7 +31,7 @@ public class Agent extends Thread {
 
   public void serverChat() {
     try {
-      ServerSocket server = new ServerSocket(1001);
+      ServerSocket server = new ServerSocket(1002);
       Socket sc = server.accept();
       DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
       message = inputChatData.readUTF();
