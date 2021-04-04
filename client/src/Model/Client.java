@@ -1,7 +1,9 @@
 package model;
 
 import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -9,16 +11,32 @@ import java.net.Socket;
  */
 public class Client {
 
-  private Socket s;
+  public String message;
 
-  public Client(String message) {
+  public void sendMessage(String message, int host) {
     try {
-      s = new Socket("192.168.0.105", 1000);
+      Socket s = new Socket("192.168.0.105", host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       dataOut.writeUTF(message);
       dataOut.close();
+      s.close();
     } catch (IOException e) {
       System.out.println("Error during socket client " + e.getMessage());
     }
   }
+
+  public void serverChat() {
+    try {
+      ServerSocket server = new ServerSocket(1002);
+      Socket sc = server.accept();
+      DataInputStream inputChatData = new DataInputStream(sc.getInputStream());
+      message = inputChatData.readUTF();
+      inputChatData.close();
+      sc.close();
+      server.close();
+    } catch (Exception e) {
+      System.out.println("Cannot create server Socket: " + e.getMessage());
+    }
+  }
+
 }

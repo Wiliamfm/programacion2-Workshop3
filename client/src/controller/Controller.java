@@ -6,11 +6,12 @@ import java.util.Scanner;
 
 public class Controller {
 
-  private Client c;
   private Scanner sc;
+  private Client c;
 
   public Controller() {
     sc = new Scanner(System.in);
+    c = new Client();
     boolean o = true;
     while (o) {
       try {
@@ -70,10 +71,10 @@ public class Controller {
                   || size.equalsIgnoreCase("muy grande")) {
                 String separetor = ",";
                 String message = String.valueOf(java.time.LocalDate.now()) + separetor
-                    + String.valueOf(java.time.LocalTime.now()) + separetor + ca + separetor + specie + separetor + size
-                    + separetor + localidad + separetor + addres + separetor + name + separetor + cel + separetor
-                    + email + separetor + comments;
-                c = new Client(message);
+                    + String.valueOf(java.time.LocalTime.now()) + separetor + ca + separetor + specie.toLowerCase()
+                    + separetor + size.toLowerCase() + separetor + localidad + separetor + addres + separetor + name
+                    + separetor + cel + separetor + email + separetor + comments;
+                c.sendMessage(message, 1000);
                 System.out.println("Su caso ha sido registrado con éxito.");
               }
             }
@@ -82,6 +83,17 @@ public class Controller {
           }
           break;
         case "2":
+          System.out.println("Conectando con el agente...");
+          c.sendMessage("message-..-", 1001);
+          c.serverChat();
+          if (c.message.equals("AceptaR-..-")) {
+            System.out.println("Conexión establecida con el agente");
+            while (true) {
+              c.serverChat();
+            }
+          } else {
+            System.out.println("El agente rechazó la conexión");
+          }
           break;
         case "3":
           System.out.println("Ha salido del programa. Vuelva pronto");
