@@ -95,7 +95,7 @@ public class Controller {
                 c.sendMessage(sc.nextLine(), 1001, 2);
               }
             } else {
-              System.out.println("El agente rechazó la conexión");
+              System.out.println("Se rechazó la conexión");
             }
           } else {
             System.out.println("No se pudo establecer conexión con el agente");

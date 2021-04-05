@@ -26,12 +26,18 @@ public class ChatServer implements Runnable {
         String[] m = a.split(",");
         switch (m[2]) {
         case "c":
-          send = new Socket(InetAddress.getLocalHost().getHostAddress(), 1002);
-          sendData = new DataOutputStream(send.getOutputStream());
-          sendData.writeUTF(m[1]);
+          try {
+            send = new Socket(m[0], 1002);
+            sendData = new DataOutputStream(send.getOutputStream());
+            sendData.writeUTF(m[1]);
+          } catch (IOException e) {
+            send = new Socket(m[0], 1003);
+            sendData = new DataOutputStream(send.getOutputStream());
+            sendData.writeUTF("No hay agentes disponibles");
+          }
           break;
         case "a":
-          send = new Socket(InetAddress.getLocalHost().getHostAddress(), 1003);
+          send = new Socket(m[0], 1003);
           sendData = new DataOutputStream(send.getOutputStream());
           sendData.writeUTF(m[1]);
           break;

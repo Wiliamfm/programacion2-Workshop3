@@ -17,7 +17,7 @@ public class Agent extends Thread {
 
   public void sendMessage(String message) {
     try {
-      Socket s = new Socket("192.168.0.105", 1001);
+      Socket s = new Socket(InetAddress.getLocalHost().getHostAddress(), 1001);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       String sep = ",";
       String m = InetAddress.getLocalHost().getHostAddress() + sep + message + sep + "a";
