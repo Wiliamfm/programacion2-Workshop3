@@ -16,7 +16,7 @@ public class Client extends Thread {
 
   public boolean sendMessage(String message, int host, int t) {
     try {
-      Socket s = new Socket(InetAddress.getLocalHost().getHostAddress(), host);
+      Socket s = new Socket("192.168.0.105", host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       switch (t) {
       case 1:

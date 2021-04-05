@@ -23,6 +23,7 @@ public class Controller {
         switch (sc.nextLine()) {
         case "1":
           a.sendMessage("AceptaR-..-");
+          System.out.println("Conexión establecida con el cliente");
           a.start();
           while (a.isAlive()) {
             a.sendMessage(sc.nextLine());
