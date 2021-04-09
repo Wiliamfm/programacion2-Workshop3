@@ -12,11 +12,13 @@ import java.net.Socket;
  */
 public class Client extends Thread {
 
+  public final String serverAddress = "192.168.0.105";
   public String message;
+  public String agentAddress = "";
 
-  public boolean sendMessage(String message, int host, int t) {
+  public boolean sendMessage(String message, String address, int host, int t) {
     try {
-      Socket s = new Socket("192.168.0.105", host);
+      Socket s = new Socket(address, host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
       switch (t) {
       case 1:
@@ -24,7 +26,7 @@ public class Client extends Thread {
         break;
       case 2:
         String sep = ",";
-        String m = InetAddress.getLocalHost().getHostAddress() + sep + message + sep + "c";
+        String m = message + sep + "c";
         dataOut.writeUTF(m);
         break;
       default:

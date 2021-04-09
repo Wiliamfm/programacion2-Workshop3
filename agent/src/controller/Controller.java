@@ -16,21 +16,24 @@ public class Controller {
     System.out.println("Bienvenido, espere hasta que un cliente solicite conexión");
     sc = new Scanner(System.in);
     a = new Agent();
+    a.sendMessage("StartConnection-..-", a.serverAddress, 1001, 2);
     while (true) {
       a.serverChat();
       if (a.message.equals("message-..-")) {
         System.out.println("¿Desea conectarse con el cliente? \n1. Aceptar \n2. Denegar");
         switch (sc.nextLine()) {
         case "1":
-          a.sendMessage("AceptaR-..-");
-          System.out.println("Conexión establecida con el cliente");
+          a.sendMessage("AceptaR-..-", a.serverAddress, 1001, 2);
+          a.serverChat();
+          a.clientAddress = a.message;
+          System.out.println("Conexión establecida con el cliente: " + a.clientAddress);
           a.start();
           while (a.isAlive()) {
-            a.sendMessage(sc.nextLine());
+            a.sendMessage(sc.nextLine(), a.clientAddress, 1003, 1);
           }
         case "2":
           System.out.println("No se estableció conexión");
-          a.sendMessage("DeneGado-..-");
+          a.sendMessage("DeneGado-..-", a.serverAddress, 1001, 2);
           break;
         default:
           System.out.println("Entrada no válida");

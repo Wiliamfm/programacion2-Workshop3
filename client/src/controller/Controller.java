@@ -73,7 +73,7 @@ public class Controller {
                     + String.valueOf(java.time.LocalTime.now()) + separetor + ca + separetor + specie.toLowerCase()
                     + separetor + size.toLowerCase() + separetor + localidad + separetor + addres + separetor + name
                     + separetor + cel + separetor + email + separetor + comments;
-                if (c.sendMessage(message, 1000, 1)) {
+                if (c.sendMessage(message, c.serverAddress, 1000, 1)) {
                   System.out.println("Su caso ha sido registrado con éxito.");
                 } else {
                   System.out.println("Caso no registrado.");
@@ -86,16 +86,17 @@ public class Controller {
           break;
         case "2":
           System.out.println("Conectando con el agente...");
-          if (c.sendMessage("message-..-", 1001, 2)) {
+          if (c.sendMessage("message-..-", c.serverAddress, 1001, 2)) {
             c.serverChat();
-            if (c.message.equals("AceptaR-..-")) {
-              System.out.println("Conexión establecida con el agente");
+            if (!c.message.equals("No hay agentes conectados")) {
+              c.agentAddress = c.message;
+              System.out.println("Conexión establecida con el agente: " + c.agentAddress);
               c.start();
               while (c.isAlive()) {
-                c.sendMessage(sc.nextLine(), 1001, 2);
+                c.sendMessage(sc.nextLine(), c.agentAddress, 1002, 1);
               }
             } else {
-              System.out.println("Se rechazó la conexión");
+              System.out.println(c.message);
             }
           } else {
             System.out.println("No se pudo establecer conexión con el agente");

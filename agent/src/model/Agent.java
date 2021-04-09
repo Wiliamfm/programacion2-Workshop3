@@ -9,19 +9,30 @@ import java.net.Socket;
 
 public class Agent extends Thread {
 
+  public final String serverAddress = "192.168.0.105";
   public String message = "";
+  public String clientAddress = "";
 
   public Agent() {
 
   }
 
-  public void sendMessage(String message) {
+  public void sendMessage(String message, String address, int host, int t) {
     try {
-      Socket s = new Socket("192.168.0.105", 1001);
+      Socket s = new Socket(address, host);
       DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
-      String sep = ",";
-      String m = InetAddress.getLocalHost().getHostAddress() + sep + message + sep + "a";
-      dataOut.writeUTF(m);
+      switch (t) {
+      case 1:
+        dataOut.writeUTF(message);
+        break;
+      case 2:
+        String sep = ",";
+        String m = message + sep + "a";
+        dataOut.writeUTF(m);
+        break;
+      default:
+        break;
+      }
       dataOut.close();
       s.close();
     } catch (IOException e) {
