@@ -1,7 +1,7 @@
 # programacion2-Workshop3
 ### Ejecutar cada paquete por separado. 
-- Ejecutar la aplicación "server" una sola vez.
-- En la carpeta agent ir a /src/model/agent.java y en el atributo serverAddress poner la ip de donde se ejecutará el servidor, hacer lo mismo para la carpeta cliente: /src/model/client.java en el atributo serverAddress.
+- Ejecutar la aplicación "server" una sola vez le aparecera una dirección ip como primer mensaje, copiela.
+- En la carpeta agent ir a /src/model/agent.java y en el atributo serverAddress poner la ip que copio cuando ejecuto el server, hacer lo mismo para la carpeta cliente: /src/model/client.java en el atributo serverAddress.
 1. Requerimiento 3:
 - Para reportar varios casos, es necesario ejecutar el cliente (aplicación "client") más de una vez (puede ser en el mismo pc).
 - Los casos reportados se guardan en una carpeta data, dentro de la aplicación (carpeta) "server".
