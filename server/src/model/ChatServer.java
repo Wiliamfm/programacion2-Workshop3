@@ -58,6 +58,11 @@ public class ChatServer implements Runnable {
             }
           } catch (IOException e) {
             System.out.println("Error in input client message: " + e.getMessage());
+            send = new Socket(ipAddress, 1003);
+            sendData = new DataOutputStream(send.getOutputStream());
+            sendData.writeUTF("No hay agentes conectados");
+            send.close();
+            sendData.close();
           }
           break;
         case "a":
@@ -84,7 +89,6 @@ public class ChatServer implements Runnable {
             agents.remove(ipAddress);
           } else if (m[0].equals("DeneGado-..-")) {
             // denegated connection from agent
-
           } else {
             // Other message input from agent?
           }
