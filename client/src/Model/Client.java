@@ -11,7 +11,7 @@ import java.net.Socket;
  */
 public class Client extends Thread {
 
-  public final String serverAddress = "192.168.0.105";
+  public final String serverAddress = "172.20.0.1";
   public String message;
   public String agentAddress = "";
 

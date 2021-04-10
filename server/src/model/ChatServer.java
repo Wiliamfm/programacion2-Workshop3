@@ -66,31 +66,48 @@ public class ChatServer implements Runnable {
           }
           break;
         case "a":
-          if (m[0].equals("StartConnection-..-")) {
-            if (agents.indexOf(ipAddress) == -1) {
-              agents.add(ipAddress);
-              System.out.println("Agente conectado: " + ipAddress);
+          try {
+            if (m[0].equals("StartConnection-..-")) {
+              if (agents.indexOf(ipAddress) == -1) {
+                agents.add(ipAddress);
+                System.out.println("Agente conectado: " + ipAddress);
+              } else {
+                System.out.println("El agente: " + ipAddress + " ya se encuentra conectado");
+              }
+            } else if (m[0].equals("AceptaR-..-")) {
+              // stablish connection with client
+              if (clients.size() != 0) {
+                send = new Socket(ipAddress, 1002);
+                sendData = new DataOutputStream(send.getOutputStream());
+                sendData.writeUTF(clients.get(0));
+                send.close();
+                sendData.close();
+                send = new Socket(clients.get(0), 1003);
+                sendData = new DataOutputStream(send.getOutputStream());
+                sendData.writeUTF(ipAddress);
+                send.close();
+                sendData.close();
+                clients.remove(0);
+                agents.remove(ipAddress);
+              } else {
+                send = new Socket(ipAddress, 1002);
+                sendData = new DataOutputStream(send.getOutputStream());
+                sendData.writeUTF("no hay clientes, GRACIAS!");
+                send.close();
+                sendData.close();
+
+              }
+            } else if (m[0].equals("DeneGado-..-")) {
+              // denegated connection from agent
             } else {
-              System.out.println("El agente: " + ipAddress + " ya se encuentra conectado");
+              // Other message input from agent?
             }
-          } else if (m[0].equals("AceptaR-..-")) {
-            // stablish connection with client
+          } catch (IndexOutOfBoundsException e2) {
             send = new Socket(ipAddress, 1002);
             sendData = new DataOutputStream(send.getOutputStream());
-            sendData.writeUTF(clients.get(0));
+            sendData.writeUTF("no hay clientes, GRACIAS!");
             send.close();
             sendData.close();
-            send = new Socket(clients.get(0), 1003);
-            sendData = new DataOutputStream(send.getOutputStream());
-            sendData.writeUTF(ipAddress);
-            send.close();
-            sendData.close();
-            clients.remove(0);
-            agents.remove(ipAddress);
-          } else if (m[0].equals("DeneGado-..-")) {
-            // denegated connection from agent
-          } else {
-            // Other message input from agent?
           }
           break;
         default:

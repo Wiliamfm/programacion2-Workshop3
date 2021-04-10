@@ -25,11 +25,15 @@ public class Controller {
         case "1":
           a.sendMessage("AceptaR-..-", a.serverAddress, 1001, 2);
           a.serverChat();
-          a.clientAddress = a.message;
-          System.out.println("Conexión establecida con el cliente: " + a.clientAddress);
-          a.start();
-          while (a.isAlive()) {
-            a.sendMessage(sc.nextLine(), a.clientAddress, 1003, 1);
+          if (a.message.equals("no hay clientes, GRACIAS!")) {
+            System.out.println("Ya no hay clientes conectados.");
+          } else {
+            a.clientAddress = a.message;
+            System.out.println("Conexión establecida con el cliente: " + a.clientAddress);
+            a.start();
+            while (a.isAlive()) {
+              a.sendMessage(sc.nextLine(), a.clientAddress, 1003, 1);
+            }
           }
         case "2":
           System.out.println("No se estableció conexión");
