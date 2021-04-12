@@ -25,7 +25,7 @@ public class Controller {
         case "1":
           a.sendMessage("AceptaR-..-", a.serverAddress, 1001, 2);
           a.serverChat();
-          if (a.message.equals("no hay clientes, GRACIAS!")) {
+          if (a.message.equals("false")) {
             System.out.println("Ya no hay clientes conectados.");
           } else {
             a.clientAddress = a.message;

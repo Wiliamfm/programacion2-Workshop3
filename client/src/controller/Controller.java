@@ -88,7 +88,7 @@ public class Controller {
           System.out.println("Conectando con el agente...");
           if (c.sendMessage("message-..-", c.serverAddress, 1001, 2)) {
             c.serverChat();
-            if (!c.message.equals("No hay agentes conectados")) {
+            if (!c.message.equals("false")) {
               c.agentAddress = c.message;
               System.out.println("Conexión establecida con el agente: " + c.agentAddress);
               c.start();

@@ -12,6 +12,7 @@ public class ChatServer implements Runnable {
   public ServerSocket servidor;
   private ArrayList<String> agents;
   private ArrayList<String> clients;
+  private int auxAgentsD;
 
   @Override
   public void run() {
@@ -19,6 +20,7 @@ public class ChatServer implements Runnable {
       servidor = new ServerSocket(1001);
       agents = new ArrayList<String>();
       clients = new ArrayList<String>();
+      auxAgentsD = 0;
       System.out.println("Chat Server created.");
       while (true) {
         Socket s = servidor.accept();
@@ -36,7 +38,7 @@ public class ChatServer implements Runnable {
               if (agents.size() == 0) {
                 send = new Socket(ipAddress, 1003);
                 sendData = new DataOutputStream(send.getOutputStream());
-                sendData.writeUTF("No hay agentes conectados");
+                sendData.writeUTF("false");
                 send.close();
                 sendData.close();
               } else {
@@ -60,7 +62,7 @@ public class ChatServer implements Runnable {
             System.out.println("Error in input client message: " + e.getMessage());
             send = new Socket(ipAddress, 1003);
             sendData = new DataOutputStream(send.getOutputStream());
-            sendData.writeUTF("No hay agentes conectados");
+            sendData.writeUTF("false");
             send.close();
             sendData.close();
           }
@@ -92,20 +94,29 @@ public class ChatServer implements Runnable {
               } else {
                 send = new Socket(ipAddress, 1002);
                 sendData = new DataOutputStream(send.getOutputStream());
-                sendData.writeUTF("no hay clientes, GRACIAS!");
+                sendData.writeUTF("false");
                 send.close();
                 sendData.close();
 
               }
             } else if (m[0].equals("DeneGado-..-")) {
               // denegated connection from agent
+              auxAgentsD++;
+              if (auxAgentsD == agents.size()) {
+                send = new Socket(ipAddress, 1003);
+                sendData = new DataOutputStream(send.getOutputStream());
+                sendData.writeUTF("false");
+                send.close();
+                sendData.close();
+
+              }
             } else {
               // Other message input from agent?
             }
           } catch (IndexOutOfBoundsException e2) {
             send = new Socket(ipAddress, 1002);
             sendData = new DataOutputStream(send.getOutputStream());
-            sendData.writeUTF("no hay clientes, GRACIAS!");
+            sendData.writeUTF("false");
             send.close();
             sendData.close();
           }
