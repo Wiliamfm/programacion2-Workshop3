@@ -25,6 +25,7 @@ public class ChatServer implements Runnable {
       while (true) {
         Socket s = servidor.accept();
         String ipAddress = s.getInetAddress().getHostAddress();
+        // System.out.println(ipAddress);
         DataInputStream inputData = new DataInputStream(s.getInputStream());
         String a = inputData.readUTF();
         System.out.println("Entrada al chat: " + a);
@@ -103,7 +104,7 @@ public class ChatServer implements Runnable {
               // denegated connection from agent
               auxAgentsD++;
               if (auxAgentsD == agents.size()) {
-                send = new Socket(ipAddress, 1003);
+                send = new Socket(clients.get(0), 1003);
                 sendData = new DataOutputStream(send.getOutputStream());
                 sendData.writeUTF("false");
                 send.close();
